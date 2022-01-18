@@ -1,43 +1,26 @@
 /*Start of JSON*/
 
-const jobsData = [
-    {
-      name: "UI/UX Designer",
-      jobId: 10002,
-      company: "Google LLC.",
-      locationPlace: "Cochin",
-      locationCountryCode: "IND",
-      type: "Remote",
-      kind:"Intern",
-      lastDateToApply:"05/02/2022",
-      headCountApplied: 20,
-      photo: "https://developers.google.com/homepage-assets/images/chromeos-logo.png"
-    },
-    {
-        name: "Java Coder",
-        jobId: 20002,
-        company: "Botx Automations Pvt. Ltd.",
-        locationPlace: "Pala",
-        locationCountryCode: "IND",
-        type: "Office",
-        kind:"Full-time",
-        lastDateToApply:"26/05/2022",
-        headCountApplied: 45,
-        photo: "https://developers.google.com/homepage-assets/images/chromeos-logo.png"
-      },
-      {
-        name: "Assistant Linux",
-        jobId: 30002,
-        company: "WeCanGrowYou LLC.",
-        locationPlace: "Westhill",
-        locationCountryCode: "IND",
-        type: "Office",
-        kind:"Part-time",
-        lastDateToApply:"11/03/2022",
-        headCountApplied: 125,
-        photo: "https://developers.google.com/homepage-assets/images/chromeos-logo.png"
-      }
-  ];
+
+function getJSONP(url, success) {
+
+  var ud = '_' + +new Date,
+      script = document.createElement('script'),
+      head = document.getElementsByTagName('head')[0] 
+             || document.documentElement;
+
+  window[ud] = function(data) {
+      head.removeChild(script);
+      success && success(data);
+  };
+
+  script.src = url.replace('callback=?', 'callback=' + ud);
+  head.appendChild(script);
+
+}
+
+const jobsData = getJSONP('https://script.google.com/macros/s/AKfycbxo2MAob3LOcKsV5pOSecNwiZT2BhnPbSMzhVvq6gpvv1p7cx4/exec', function(data){
+  console.log(data);
+}); 
 
   /*end of JSON*/
 
