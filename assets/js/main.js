@@ -1,12 +1,32 @@
 /*Start of JSON*/
 
-const jobsData= [{"name":"Foresters","jobId":"22222","company":"Young LLC. ","locationPlace":"Pala","locationCountryCode":"IND","type":"Remote","kind":"In","lastDateToApply":"02/05/2022","headCountApplied":"45","photo":"https://developers.google.com/homepage-assets/images/chromeos-logo.png"},{"name":"Biochemist","jobId":"22444","company":"Craft LLC. ","locationPlace":"Kottayam","locationCountryCode":"CHN","type":"Office","kind":"PT","lastDateToApply":"05/05/2022","headCountApplied":"49","photo":"https://developers.google.com/homepage-assets/images/chromeos-logo.png"},{"name":"Food scientist","jobId":"22666","company":"Tasker LLC.  ","locationPlace":"Haripad","locationCountryCode":"USA","type":"Remote","kind":"FT","lastDateToApply":"08/05/2022","headCountApplied":"58","photo":"https://developers.google.com/homepage-assets/images/chromeos-logo.png"},{"name":"Geneticist","jobId":"22888","company":"Jacobs LLC.  ","locationPlace":"Cherur","locationCountryCode":"UK","type":"Office","kind":"In","lastDateToApply":"11/05/2022","headCountApplied":"23","photo":"https://developers.google.com/homepage-assets/images/chromeos-logo.png"},{"name":"Farmer","jobId":"23110","company":"Patel LLC.  ","locationPlace":"Ula","locationCountryCode":"DXB","type":"Remote","kind":"PT","lastDateToApply":"14/05/2022","headCountApplied":"25","photo":"https://developers.google.com/homepage-assets/images/chromeos-logo.png"},{"name":"Biologist","jobId":"23332","company":"Astral Home ","locationPlace":"Mala","locationCountryCode":"IND","type":"Office","kind":"FT","lastDateToApply":"17/05/2022","headCountApplied":"14","photo":"https://developers.google.com/homepage-assets/images/chromeos-logo.png"},{"name":"Horticulturist","jobId":"23554","company":"Hobbs Coac ","locationPlace":"Kaad","locationCountryCode":"CHN","type":"Remote","kind":"In","lastDateToApply":"20/05/2022","headCountApplied":"42","photo":"https://developers.google.com/homepage-assets/images/chromeos-logo.png"},{"name":"Attendant","jobId":"23776","company":"Hanley Mar","locationPlace":"Vazhoor","locationCountryCode":"USA","type":"Office","kind":"PT","lastDateToApply":"23/05/2022","headCountApplied":"13","photo":"https://developers.google.com/homepage-assets/images/chromeos-logo.png"},{"name":"Teacher","jobId":"23998","company":"Wagstaff Care","locationPlace":"Ula","locationCountryCode":"UK","type":"Remote","kind":"FT","lastDateToApply":"26/05/2022","headCountApplied":"4","photo":"https://developers.google.com/homepage-assets/images/chromeos-logo.png"},{"name":"Plant biologist","jobId":"24220","company":"Radley Cas ","locationPlace":"Mala","locationCountryCode":"DXB","type":"Office","kind":"In","lastDateToApply":"29/05/2022","headCountApplied":"6","photo":"https://developers.google.com/homepage-assets/images/chromeos-logo.png"},{"name":"Inspector","jobId":"24442","company":"Porter Beauty","locationPlace":"Kaad","locationCountryCode":"IND","type":"Remote","kind":"PT","lastDateToApply":"01/06/2022","headCountApplied":"18","photo":"https://developers.google.com/homepage-assets/images/chromeos-logo.png"},{"name":"Soil scientist","jobId":"24664","company":"Jewel LLC.  ","locationPlace":"Lothoor","locationCountryCode":"CHN","type":"Office","kind":"FT","lastDateToApply":"04/06/2022","headCountApplied":"476","photo":"https://developers.google.com/homepage-assets/images/chromeos-logo.png"},{"name":"Beekeeper","jobId":"24886","company":"East View LLC. ","locationPlace":"Ula","locationCountryCode":"USA","type":"Remote","kind":"In","lastDateToApply":"07/06/2022","headCountApplied":"41","photo":"https://developers.google.com/homepage-assets/images/chromeos-logo.png"},{"name":"Ecologist","jobId":"25108","company":"Trussell LLC.  ","locationPlace":"Mala","locationCountryCode":"UK","type":"Office","kind":"PT","lastDateToApply":"10/06/2022","headCountApplied":"89","photo":"https://developers.google.com/homepage-assets/images/chromeos-logo.png"}];
-  /*end of JSON*/
+var jobsData =[];
 
+let url = 'https://sheetdb.io/api/v1/qfs2j4ar3j23a';
 
-  function jobTemplate(job) {
-    return `
-      <div>
+fetch(url)
+.then(res => res.json())
+.then(out => 
+  getData(out));
+
+function getData(a){ 
+  jobsData = a;
+  showAllJobs()
+}
+
+function showAllJobs() {
+  outputJobs(this.jobsData);
+}
+
+function outputJobs(jobsData){
+document.getElementById("app").innerHTML = `
+<h4 class="justify-center text-xl text-bold text-center text-gray-300"> Explore Featured Jobs (${jobsData.length} results)</h4> 
+${jobsData.map(jobTemplate).join("")}
+`; }
+/*end of JSON*/
+
+function jobTemplate(job) {
+  return `
       <!--Job Card-->
     <section class="ml-10 pl-10 items-center justify-evenly place-content-stretch float-left">
       <div class="max-w-lg min-w-0 mx-auto z-10 justify-start">
@@ -66,8 +86,9 @@ const jobsData= [{"name":"Foresters","jobId":"22222","company":"Young LLC. ","lo
                     </svg>
                     <p class="">${job.headCountApplied} Applied! </p>
                   </div>
+                  
                   <button
-                    class="flex-no-shrink bg-blue-500 hover:bg-blue-500 px-5 ml-4 py-2 text-xs shadow-sm hover:shadow-lg font-medium tracking-wider border-2  hover:border-blue-500 text-white rounded-lg transition ease-in duration-300" type="button" data-modal-toggle="resumeUpload-modal">Apply
+                    class="flex-no-shrink bg-blue-500 hover:bg-blue-500 px-5 ml-4 py-2 text-xs shadow-sm hover:shadow-lg font-medium tracking-wider border-2  hover:border-blue-500 text-white rounded-lg transition ease-in duration-300" type="button" data-modal-toggle="hi-modal" >Apply
                     Now</button>
                 </div>
               </div>
@@ -75,16 +96,12 @@ const jobsData= [{"name":"Foresters","jobId":"22222","company":"Young LLC. ","lo
           </div>
         </div>
       </div>
-      </div>
-      </div>
     </section>
     <!--Job Card-->
-      </div>
-    `;
-  }
+    `
+}
 
-
-  document.getElementById("app").innerHTML = `
+document.getElementById("app").innerHTML = `
   <h4 class="justify-center text-xl text-bold text-center text-gray-300"> Explore Featured Jobs (${jobsData.length} results)</h4> 
   ${jobsData.map(jobTemplate).join("")}
-`;
+  `;
